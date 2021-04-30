@@ -18,6 +18,7 @@
             android:background="@drawable/circle1"
             android:gravity="center"
             android:text="Back"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -30,7 +31,8 @@
             android:text="Make upcycling plants together and sell them!"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 
@@ -49,6 +51,7 @@
             android:padding="5dp"
             android:text="모집 인원"
             android:textSize="16sp"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <TextView
@@ -59,6 +62,7 @@
             android:padding="5dp"
             android:text="0 / 10"
             android:textSize="16sp"
+            android:textColor="@color/black"
             android:textStyle="bold" />
     </LinearLayout>
 
