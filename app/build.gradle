@@ -69,4 +69,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     kapt 'com.google.dagger:hilt-compiler:2.35'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 }
