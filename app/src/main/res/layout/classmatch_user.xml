@@ -46,7 +46,6 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/box1"
         android:gravity="center|center_horizontal|center_vertical"
-        android:padding="10dp"
         android:text="Join"
         android:textColor="@color/white"
         android:textSize="18sp"
@@ -56,4 +55,5 @@
         app:layout_constraintStart_toEndOf="@+id/nickname"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
