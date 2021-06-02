@@ -9,5 +9,5 @@ interface ServerRepository {
     fun registerUser(userRegisterRequest: RegisterRequest, onSuccess: ()->Unit, onFailureLambda: (message: String)->Unit)
 
     // Login - Throws Runtime Exception
-    fun loginUser(userLoginRequest: LoginRequest)
+    fun loginUser(userLoginRequest: LoginRequest, onSuccess: () -> Unit, onFailureLambda: (message: String) -> Unit)
 }

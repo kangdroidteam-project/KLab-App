@@ -86,20 +86,8 @@ object ServerRepositoryImpl: ServerRepository {
         registerFunction.enqueue(getCallback(onSuccess, onFailureLambda))
     }
 
-    override fun loginUser(userLoginRequest: LoginRequest) {
-        val loginFunction: Call<LoginResponse> = api.loginUser(
-            userLoginRequest = userLoginRequest)
-
-        // Get response
-
-        val response: Response<LoginResponse> =
-            ServerRepositoryHelper.exchangeDataWithServer(loginFunction)
-        if(response.isSuccessful){
-            userToken = response.body()?.userToken
-            Log.e(logTag, "$userToken")
-        } else {
-            // handle error
-            ServerRepositoryHelper.handleDataError(response)
-        }
+    override fun loginUser(userLoginRequest: LoginRequest, onSuccess: () -> Unit, onFailureLambda: (message: String) -> Unit) {
+        val loginFunction: Call<LoginResponse> = api.loginUser(userLoginRequest)
+        loginFunction.enqueue(getCallback(onSuccess, onFailureLambda))
     }
 }
