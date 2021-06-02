@@ -21,14 +21,14 @@ object ServerRepositoryHelper {
                 } else {
                     // For 400 to 500 response
                     val errorMessage: String = ServerRepositoryHelper.getErrorMessage(response)
-                    Log.e(this::class.java.simpleName, errorMessage)
+                    Log.e(logTag, errorMessage)
                     onFailureLambda(errorMessage)
                 }
             }
 
             override fun onFailure(call: Call<T>, t: Throwable) {
                 // somewhat fatal error[I/O]
-                Log.e(this::class.java.simpleName, "Error communicating to server: ${t.stackTraceToString()}")
+                Log.e(logTag, "Error communicating to server: ${t.stackTraceToString()}")
                 onFailureLambda(t.message ?: "No Message")
             }
         }
@@ -40,8 +40,8 @@ object ServerRepositoryHelper {
 
         // Get error body as map, since spring's default error response was sent.
         val errorBodyMap: Map<String, String> = objectMapper.readValue(errorBody.string()) // Could throw
-        return if (errorBodyMap.contains("message")) { // Common about our error response and spring error response
-            errorBodyMap["message"]!!
+        return if (errorBodyMap.contains("errorMessage")) { // Common about our error response and spring error response
+            errorBodyMap["errorMessage"]!!
         } else {
             "Error message was not found!! This should be reported to developers."
         }

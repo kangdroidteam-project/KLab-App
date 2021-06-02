@@ -58,12 +58,20 @@ object ServerRepositoryImpl: ServerRepository {
         return retroFit.create(ServerAPI::class.java)
     }
 
-    override fun registerUser(userRegisterRequest: RegisterRequest, onSuccess: ()->Unit, onFailureLambda: (message: String)->Unit) {
+    override fun registerUser(
+        userRegisterRequest: RegisterRequest,
+        onSuccess: ()->Unit,
+        onFailureLambda: (message: String)->Unit
+    ) {
         val registerFunction: Call<ResponseBody> = api.registerUser(userRegisterRequest)
         registerFunction.enqueue(ServerRepositoryHelper.getCallback(onSuccess, onFailureLambda))
     }
 
-    override fun loginUser(userLoginRequest: LoginRequest, onSuccess: () -> Unit, onFailureLambda: (message: String) -> Unit) {
+    override fun loginUser(
+        userLoginRequest: LoginRequest,
+        onSuccess: () -> Unit,
+        onFailureLambda: (message: String) -> Unit
+    ) {
         val loginFunction: Call<LoginResponse> = api.loginUser(userLoginRequest)
         loginFunction.enqueue(ServerRepositoryHelper.getCallback(onSuccess, onFailureLambda))
     }
