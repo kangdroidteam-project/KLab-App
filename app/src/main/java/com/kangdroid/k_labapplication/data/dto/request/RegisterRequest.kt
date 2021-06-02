@@ -5,6 +5,5 @@ data class RegisterRequest(
     var userName: String,
     var userAddress: String,
     var userPhoneNumber: String,
-    var userPassword: String,
-    var userAgreementAgreed: Boolean
+    var userPassword: String
 )
