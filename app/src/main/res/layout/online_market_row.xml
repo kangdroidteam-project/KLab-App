@@ -20,7 +20,7 @@
         android:scaleType="center"
         android:cropToPadding="true"
         android:background="@drawable/green_box4"
-        app:srcCompat="@drawable/img1"/>
+        app:srcCompat="@drawable/user"/>
 
     <TextView
         android:id="@+id/online_title"

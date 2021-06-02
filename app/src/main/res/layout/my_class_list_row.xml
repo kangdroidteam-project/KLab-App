@@ -97,7 +97,7 @@
         android:layout_height="30dp"
         android:layout_weight="1"
         android:layout_marginRight="10dp"
-        android:src="@drawable/check"
+        android:src="@drawable/ic_baseline_check_24"
         android:padding="3dp"
         android:background="@drawable/circle_btn" />
         <!-- 확정된 클래스가 아닐 경우 이 옵션 추가: android:backgroundTint="#808080" -->
