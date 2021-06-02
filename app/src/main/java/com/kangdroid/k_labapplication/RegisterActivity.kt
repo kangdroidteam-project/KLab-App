@@ -59,6 +59,8 @@ class RegisterActivity : AppCompatActivity() {
                 if(flag){
                     try {
                         ServerRepositoryImpl.registerUser(RegisterRequest(userId, userName, userAddress, userPhoneNumber, userPassword))
+                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                        startActivity(intent)
                     }catch (e : RuntimeException){
                         //error
                     }
