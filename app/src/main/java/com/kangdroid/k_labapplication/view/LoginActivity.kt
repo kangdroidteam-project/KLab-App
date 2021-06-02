@@ -1,22 +1,22 @@
-package com.kangdroid.k_labapplication
+package com.kangdroid.k_labapplication.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.kangdroid.k_labapplication.data.dto.request.LoginRequest
-import com.kangdroid.k_labapplication.data.dto.request.RegisterRequest
-import com.kangdroid.k_labapplication.databinding.ClassListBinding
 import com.kangdroid.k_labapplication.databinding.LoginBinding
-import com.kangdroid.k_labapplication.repository.ServerRepository
 import com.kangdroid.k_labapplication.repository.ServerRepositoryImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.lang.RuntimeException
 
 class LoginActivity : AppCompatActivity() {
     private val binding: LoginBinding by lazy {
         LoginBinding.inflate(layoutInflater)
     }
-
 
     var flag : Boolean = true
 
@@ -40,12 +40,13 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 if(flag){
-                    try{
+                    runCatching {
                         ServerRepositoryImpl.loginUser(LoginRequest(userId, userPassword))
+                    }.onSuccess {
                         val intent = Intent(this@LoginActivity, ClassListActivity::class.java)
                         startActivity(intent)
-                    }catch (e:RuntimeException){
-                        //error
+                    }.onFailure {
+                        // Fail
                     }
                 }
 

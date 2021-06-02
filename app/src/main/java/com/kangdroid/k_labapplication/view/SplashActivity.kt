@@ -1,9 +1,10 @@
-package com.kangdroid.k_labapplication
+package com.kangdroid.k_labapplication.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.kangdroid.k_labapplication.R
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
             finish()
-        },DURATION)
+        }, DURATION)
     }
     companion object {
         private const val DURATION : Long = 3000

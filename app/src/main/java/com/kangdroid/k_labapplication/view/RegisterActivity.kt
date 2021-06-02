@@ -1,4 +1,4 @@
-package com.kangdroid.k_labapplication
+package com.kangdroid.k_labapplication.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +8,16 @@ import com.kangdroid.k_labapplication.data.dto.request.RegisterRequest
 import com.kangdroid.k_labapplication.databinding.LoginBinding
 import com.kangdroid.k_labapplication.databinding.RegisterBinding
 import com.kangdroid.k_labapplication.repository.ServerRepositoryImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.lang.RuntimeException
 
 class RegisterActivity : AppCompatActivity() {
+    val binding2 : LoginBinding by lazy{
+        LoginBinding.inflate(layoutInflater)
+    }
 
     private val binding : RegisterBinding by lazy {
         RegisterBinding.inflate(layoutInflater)
@@ -33,13 +40,13 @@ class RegisterActivity : AppCompatActivity() {
 
             joinBtn.setOnClickListener {
 
-                val userId =  joinId.toString()
-                val userName = joinName.toString()
-                val userAddress = joinAddr.toString()
-                val userPhoneNumber = joinPhone.toString()
-                val userPassword = joinPw.toString()
+                val userId =  joinId.text.toString()
+                val userName = joinName.text.toString()
+                val userAddress = joinAddr.text.toString()
+                val userPhoneNumber = joinPhone.text.toString()
+                val userPassword = joinPw.text.toString()
 
-                val pwcheck = joinPwCheck.toString()
+                val pwcheck = joinPwCheck.text.toString()
 
                 if(userId=="" || userName=="" || userAddress=="" || userPhoneNumber=="" || userPassword==""){
                     Toast.makeText(this@RegisterActivity,"양식을 모두 채우지 않았습니다.",Toast.LENGTH_SHORT).show()
@@ -57,14 +64,14 @@ class RegisterActivity : AppCompatActivity() {
                 }
 
                 if(flag){
-                    try {
+                    runCatching {
                         ServerRepositoryImpl.registerUser(RegisterRequest(userId, userName, userAddress, userPhoneNumber, userPassword))
+                    }.onSuccess {
                         val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                         startActivity(intent)
-                    }catch (e : RuntimeException){
-                        //error
+                    }.onFailure {
+                        // Error
                     }
-
                 }
 
             }

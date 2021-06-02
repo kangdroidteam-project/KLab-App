@@ -1,4 +1,4 @@
-package com.kangdroid.k_labapplication
+package com.kangdroid.k_labapplication.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
