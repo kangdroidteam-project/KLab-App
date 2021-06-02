@@ -46,4 +46,17 @@ object ServerRepositoryHelper {
             throw NoSuchFieldException("Error message was not found!! This should be reported to developers.")
         }
     }
+
+    fun <T> getErrorMessage(response: Response<T>): String {
+        // If error body is null, something went wrong.
+        val errorBody: ResponseBody = response.errorBody()!!
+
+        // Get error body as map, since spring's default error response was sent.
+        val errorBodyMap: Map<String, String> = objectMapper.readValue(errorBody.string()) // Could throw
+        return if (errorBodyMap.contains("message")) { // Common about our error response and spring error response
+            errorBodyMap["message"]!!
+        } else {
+            "Error message was not found!! This should be reported to developers."
+        }
+    }
 }

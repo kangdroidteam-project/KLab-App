@@ -7,6 +7,7 @@ import com.kangdroid.k_labapplication.data.dto.response.LoginResponse
 import okhttp3.HttpUrl
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -44,7 +45,7 @@ object ServerRepositoryImpl: ServerRepository {
     private fun initRetroFit(): Retrofit {
         val httpUrl: HttpUrl = HttpUrl.Builder()
             .scheme("http")
-            .host("192.168.00.00") // TODO 서버 주소
+            .host("192.168.0.46") // TODO 서버 주소
             .port(8080)
             .build()
         return Retrofit.Builder()
@@ -57,17 +58,32 @@ object ServerRepositoryImpl: ServerRepository {
         return retroFit.create(ServerAPI::class.java)
     }
 
-    override fun registerUser(userRegisterRequest: RegisterRequest) {
-        val registerFunction: Call<ResponseBody> = api.registerUser(
-            userRegisterRequest = userRegisterRequest)
+    private fun<T> getCallback(onSuccess: () -> Unit, onFailureLambda: (message: String) -> Unit): Callback<T> {
+        return object: Callback<T> {
+            override fun onResponse(call: Call<T>, response: Response<T>) {
+                // When 200-ish response
+                if (response.isSuccessful) {
+                    onSuccess()
+                } else {
+                    // For 400 to 500 response
+                    val errorMessage: String = ServerRepositoryHelper.getErrorMessage(response)
+                    Log.e(this::class.java.simpleName, errorMessage)
+                    onFailureLambda(errorMessage)
+                }
+            }
 
-        // Get response
-        val response: Response<ResponseBody> =
-            ServerRepositoryHelper.exchangeDataWithServer(registerFunction)
-        if(!response.isSuccessful){
-            // handle error
-            ServerRepositoryHelper.handleDataError(response)
+            override fun onFailure(call: Call<T>, t: Throwable) {
+                // somewhat fatal error[I/O]
+                Log.e(this::class.java.simpleName, "Error communicating to server: ${t.stackTraceToString()}")
+                onFailureLambda(t.message ?: "No Message")
+            }
+
         }
+    }
+
+    override fun registerUser(userRegisterRequest: RegisterRequest, onSuccess: ()->Unit, onFailureLambda: (message: String)->Unit) {
+        val registerFunction: Call<ResponseBody> = api.registerUser(userRegisterRequest)
+        registerFunction.enqueue(getCallback(onSuccess, onFailureLambda))
     }
 
     override fun loginUser(userLoginRequest: LoginRequest) {
