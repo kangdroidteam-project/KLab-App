@@ -1,14 +1,11 @@
-package com.kangdroid.k_labapplication
+package com.kangdroid.k_labapplication.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.kangdroid.k_labapplication.data.dto.request.LoginRequest
-import com.kangdroid.k_labapplication.data.dto.request.RegisterRequest
-import com.kangdroid.k_labapplication.databinding.ClassListBinding
 import com.kangdroid.k_labapplication.databinding.LoginBinding
-import com.kangdroid.k_labapplication.repository.ServerRepository
 import com.kangdroid.k_labapplication.repository.ServerRepositoryImpl
 import java.lang.RuntimeException
 

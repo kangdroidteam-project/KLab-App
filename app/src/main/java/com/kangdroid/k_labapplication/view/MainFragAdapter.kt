@@ -1,4 +1,4 @@
-package com.kangdroid.k_labapplication
+package com.kangdroid.k_labapplication.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
