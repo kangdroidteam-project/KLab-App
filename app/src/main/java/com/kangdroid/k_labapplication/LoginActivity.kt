@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.kangdroid.k_labapplication.data.dto.request.LoginRequest
 import com.kangdroid.k_labapplication.data.dto.request.RegisterRequest
+import com.kangdroid.k_labapplication.databinding.ClassListBinding
 import com.kangdroid.k_labapplication.databinding.LoginBinding
 import com.kangdroid.k_labapplication.repository.ServerRepository
 import com.kangdroid.k_labapplication.repository.ServerRepositoryImpl
@@ -41,6 +42,8 @@ class LoginActivity : AppCompatActivity() {
                 if(flag){
                     try{
                         ServerRepositoryImpl.loginUser(LoginRequest(userId, userPassword))
+                        val intent = Intent(this@LoginActivity, ClassListActivity::class.java)
+                        startActivity(intent)
                     }catch (e:RuntimeException){
                         //error
                     }
@@ -49,7 +52,8 @@ class LoginActivity : AppCompatActivity() {
             }
 
             joinBtn.setOnClickListener {
-
+                val intent2 = Intent(this@LoginActivity, RegisterActivity::class.java)
+                startActivity(intent2)
             }
         }
     }
