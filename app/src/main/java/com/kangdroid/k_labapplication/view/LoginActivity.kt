@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                             startActivity(intent)
                         },
                         onFailureLambda = {
-                            // Not yet implemented
+                            Toast.makeText(this@LoginActivity, it, Toast.LENGTH_SHORT).show()
                         }
                     )
                 }

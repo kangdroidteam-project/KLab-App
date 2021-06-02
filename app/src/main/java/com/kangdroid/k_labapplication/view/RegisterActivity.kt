@@ -70,7 +70,7 @@ class RegisterActivity : AppCompatActivity() {
                             startActivity(intent)
                         },
                         onFailureLambda = {
-                            // Not Yet implemented
+                            Toast.makeText(this@RegisterActivity, it, Toast.LENGTH_SHORT).show()
                         }
                     )
                 }
