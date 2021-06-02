@@ -64,14 +64,15 @@ class RegisterActivity : AppCompatActivity() {
                 }
 
                 if(flag){
-                    runCatching {
-                        ServerRepositoryImpl.registerUser(RegisterRequest(userId, userName, userAddress, userPhoneNumber, userPassword))
-                    }.onSuccess {
-                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                        startActivity(intent)
-                    }.onFailure {
-                        // Error
-                    }
+                    ServerRepositoryImpl.registerUser(RegisterRequest(userId, userName, userAddress, userPhoneNumber, userPassword),
+                        onSuccess = {
+                            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                            startActivity(intent)
+                        },
+                        onFailureLambda = {
+                            // Not Yet implemented
+                        }
+                    )
                 }
 
             }

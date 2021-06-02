@@ -7,6 +7,7 @@ import com.kangdroid.k_labapplication.data.dto.response.LoginResponse
 import okhttp3.HttpUrl
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -44,7 +45,7 @@ object ServerRepositoryImpl: ServerRepository {
     private fun initRetroFit(): Retrofit {
         val httpUrl: HttpUrl = HttpUrl.Builder()
             .scheme("http")
-            .host("192.168.00.00") // TODO 서버 주소
+            .host("192.168.0.46") // TODO 서버 주소
             .port(8080)
             .build()
         return Retrofit.Builder()
@@ -57,33 +58,21 @@ object ServerRepositoryImpl: ServerRepository {
         return retroFit.create(ServerAPI::class.java)
     }
 
-    override fun registerUser(userRegisterRequest: RegisterRequest) {
-        val registerFunction: Call<ResponseBody> = api.registerUser(
-            userRegisterRequest = userRegisterRequest)
-
-        // Get response
-        val response: Response<ResponseBody> =
-            ServerRepositoryHelper.exchangeDataWithServer(registerFunction)
-        if(!response.isSuccessful){
-            // handle error
-            ServerRepositoryHelper.handleDataError(response)
-        }
+    override fun registerUser(
+        userRegisterRequest: RegisterRequest,
+        onSuccess: ()->Unit,
+        onFailureLambda: (message: String)->Unit
+    ) {
+        val registerFunction: Call<ResponseBody> = api.registerUser(userRegisterRequest)
+        registerFunction.enqueue(ServerRepositoryHelper.getCallback(onSuccess, onFailureLambda))
     }
 
-    override fun loginUser(userLoginRequest: LoginRequest) {
-        val loginFunction: Call<LoginResponse> = api.loginUser(
-            userLoginRequest = userLoginRequest)
-
-        // Get response
-
-        val response: Response<LoginResponse> =
-            ServerRepositoryHelper.exchangeDataWithServer(loginFunction)
-        if(response.isSuccessful){
-            userToken = response.body()?.userToken
-            Log.e(logTag, "$userToken")
-        } else {
-            // handle error
-            ServerRepositoryHelper.handleDataError(response)
-        }
+    override fun loginUser(
+        userLoginRequest: LoginRequest,
+        onSuccess: () -> Unit,
+        onFailureLambda: (message: String) -> Unit
+    ) {
+        val loginFunction: Call<LoginResponse> = api.loginUser(userLoginRequest)
+        loginFunction.enqueue(ServerRepositoryHelper.getCallback(onSuccess, onFailureLambda))
     }
 }

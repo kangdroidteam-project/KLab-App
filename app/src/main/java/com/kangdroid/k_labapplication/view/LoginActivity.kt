@@ -40,14 +40,16 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 if(flag){
-                    runCatching {
-                        ServerRepositoryImpl.loginUser(LoginRequest(userId, userPassword))
-                    }.onSuccess {
-                        val intent = Intent(this@LoginActivity, ClassListActivity::class.java)
-                        startActivity(intent)
-                    }.onFailure {
-                        // Fail
-                    }
+                    ServerRepositoryImpl.loginUser(
+                        userLoginRequest = LoginRequest(userId, userPassword),
+                        onSuccess = {
+                            val intent = Intent(this@LoginActivity, ClassListActivity::class.java)
+                            startActivity(intent)
+                        },
+                        onFailureLambda = {
+                            // Not yet implemented
+                        }
+                    )
                 }
 
             }
