@@ -10,8 +10,9 @@ import com.kangdroid.k_labapplication.R
 import com.kangdroid.k_labapplication.databinding.FragmentInfoBinding
 
 class InfoFragment(val num:Int) : Fragment() {
-    var binding: FragmentInfoBinding? = null
-    val list = arrayListOf<Int>(
+    private var _binding: FragmentInfoBinding? = null
+    private val binding: FragmentInfoBinding get() = _binding!!
+    private val list = arrayListOf<Int>(
         R.drawable.info0,
         R.drawable.info1,
         R.drawable.info2,
@@ -23,19 +24,28 @@ class InfoFragment(val num:Int) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentInfoBinding.inflate(layoutInflater, container, false)
+    ): View {
+        _binding = FragmentInfoBinding.inflate(layoutInflater, container, false)
 
-        binding?.apply {
-            img?.setImageResource(list[num])
-            if(num == 5){
-                img.setOnClickListener { 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(binding) {
+            img.setImageResource(list[num])
+            img.setOnClickListener {
+                if(num == 5){
                     val intent = Intent(context, LoginActivity::class.java)
                     startActivity(intent)
                 }
             }
         }
+    }
 
-        return binding!!.root
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
