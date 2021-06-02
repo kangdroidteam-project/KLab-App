@@ -58,36 +58,13 @@ object ServerRepositoryImpl: ServerRepository {
         return retroFit.create(ServerAPI::class.java)
     }
 
-    private fun<T> getCallback(onSuccess: () -> Unit, onFailureLambda: (message: String) -> Unit): Callback<T> {
-        return object: Callback<T> {
-            override fun onResponse(call: Call<T>, response: Response<T>) {
-                // When 200-ish response
-                if (response.isSuccessful) {
-                    onSuccess()
-                } else {
-                    // For 400 to 500 response
-                    val errorMessage: String = ServerRepositoryHelper.getErrorMessage(response)
-                    Log.e(this::class.java.simpleName, errorMessage)
-                    onFailureLambda(errorMessage)
-                }
-            }
-
-            override fun onFailure(call: Call<T>, t: Throwable) {
-                // somewhat fatal error[I/O]
-                Log.e(this::class.java.simpleName, "Error communicating to server: ${t.stackTraceToString()}")
-                onFailureLambda(t.message ?: "No Message")
-            }
-
-        }
-    }
-
     override fun registerUser(userRegisterRequest: RegisterRequest, onSuccess: ()->Unit, onFailureLambda: (message: String)->Unit) {
         val registerFunction: Call<ResponseBody> = api.registerUser(userRegisterRequest)
-        registerFunction.enqueue(getCallback(onSuccess, onFailureLambda))
+        registerFunction.enqueue(ServerRepositoryHelper.getCallback(onSuccess, onFailureLambda))
     }
 
     override fun loginUser(userLoginRequest: LoginRequest, onSuccess: () -> Unit, onFailureLambda: (message: String) -> Unit) {
         val loginFunction: Call<LoginResponse> = api.loginUser(userLoginRequest)
-        loginFunction.enqueue(getCallback(onSuccess, onFailureLambda))
+        loginFunction.enqueue(ServerRepositoryHelper.getCallback(onSuccess, onFailureLambda))
     }
 }
