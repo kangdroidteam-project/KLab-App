@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kangdroid.k_labapplication.R
-import com.kangdroid.k_labapplication.databinding.ActivityMainBinding
+import com.kangdroid.k_labapplication.adapter.TabFragAdapter
 import com.kangdroid.k_labapplication.databinding.ActivityTabBinding
 
 class TabActivity : AppCompatActivity() {
@@ -24,7 +24,8 @@ class TabActivity : AppCompatActivity() {
     }
 
     private fun init(){
-        binding.viewPager.adapter = TabFragAdapter(this)
+        binding.viewPager.adapter =
+            TabFragAdapter(this)
         //Tab, view 연결
         TabLayoutMediator(binding.tablayout, binding.viewPager){
                 tab, position ->
