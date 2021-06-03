@@ -1,13 +1,15 @@
 package com.kangdroid.k_labapplication.repository
 
 import android.util.Log
+import com.kangdroid.k_labapplication.data.Community
+import com.kangdroid.k_labapplication.data.SimplifiedCommunity
+import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
 import com.kangdroid.k_labapplication.data.dto.request.LoginRequest
 import com.kangdroid.k_labapplication.data.dto.request.RegisterRequest
 import com.kangdroid.k_labapplication.data.dto.response.LoginResponse
 import okhttp3.HttpUrl
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,6 +24,14 @@ object ServerRepositoryImpl: ServerRepository {
 
     // User Token
     var userToken: String? = null
+
+    // Headers
+    private fun getHeaders(): HashMap<String, Any?>{
+        // Set headers
+        val headers : HashMap<String, Any?> = HashMap()
+        headers["X-AUTH-TOKEN"] = userToken
+        return headers
+    }
 
     init {
         isServerEnabled = initWholeServerClient()
@@ -73,7 +83,57 @@ object ServerRepositoryImpl: ServerRepository {
         onFailureLambda: (message: String) -> Unit
     ) {
         val loginFunction: Call<LoginResponse> = api.loginUser(userLoginRequest)
-        loginFunction.enqueue(ServerRepositoryHelper.getCallback<LoginResponse>(onSuccess, onFailureLambda))
+        val customSuccess: (loginResponse: LoginResponse?) -> Unit = {
+            userToken = it?.userToken
+            onSuccess.invoke(it)
+        }
+        loginFunction.enqueue(ServerRepositoryHelper.getCallback<LoginResponse>(customSuccess, onFailureLambda))
     }
 
+    override fun getClassList(): List<SimplifiedCommunity> {
+        val getClassListFunc: Call<List<SimplifiedCommunity>> = api.getClassList(header = getHeaders())
+        val response: Response<List<SimplifiedCommunity>> =
+            ServerRepositoryHelper.exchangeDataWithServer(getClassListFunc)
+
+        if (!response.isSuccessful) {
+            // handling fail
+            Log.e(logTag, "${response.code()}")
+            ServerRepositoryHelper.getErrorMessage(response)
+        }
+
+        return response.body()
+            ?: throw RuntimeException("Response Error")
+    }
+
+    override fun getDetailedClass(id: Long): Community {
+        val getDetailedFunc: Call<Community> =
+            api.getDetailedClass(header = getHeaders(), id = id)
+        val response: Response<Community> =
+            ServerRepositoryHelper.exchangeDataWithServer(getDetailedFunc)
+
+        if (!response.isSuccessful) {
+            // handling fail
+            Log.e(logTag, "${response.code()}")
+            ServerRepositoryHelper.getErrorMessage(response)
+        }
+
+        return response.body()
+            ?: throw RuntimeException("Response Error")
+    }
+
+    override fun registerClass(id: Long): List<SimplifiedMyPageCommunity> {
+        val registerClassFunc: Call<List<SimplifiedMyPageCommunity>>
+                = api.registerClass(header = getHeaders(), id = id)
+        val response: Response<List<SimplifiedMyPageCommunity>> =
+            ServerRepositoryHelper.exchangeDataWithServer(registerClassFunc)
+
+        if (!response.isSuccessful) {
+            // handling fail
+            Log.e(logTag, "${response.code()}")
+            ServerRepositoryHelper.getErrorMessage(response)
+        }
+
+        return response.body()
+            ?: throw RuntimeException("Response Error")
+    }
 }
