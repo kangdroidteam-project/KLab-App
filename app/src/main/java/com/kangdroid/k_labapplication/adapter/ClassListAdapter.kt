@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.kangdroid.k_labapplication.data.dto.response.SimplifiedCommunity
+import com.kangdroid.k_labapplication.data.SimplifiedCommunity
 import com.kangdroid.k_labapplication.databinding.ClassListRecycleBinding
 
 class ClassListAdapter (val items:ArrayList<SimplifiedCommunity>) : RecyclerView.Adapter<ClassListAdapter.ViewHolder>(){
