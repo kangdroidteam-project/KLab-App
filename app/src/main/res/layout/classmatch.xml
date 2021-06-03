@@ -44,7 +44,7 @@
         android:layout_margin="10dp">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/recruitment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -55,7 +55,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/contentNeeds"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

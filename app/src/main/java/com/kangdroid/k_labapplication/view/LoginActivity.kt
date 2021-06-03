@@ -7,11 +7,7 @@ import android.widget.Toast
 import com.kangdroid.k_labapplication.data.dto.request.LoginRequest
 import com.kangdroid.k_labapplication.databinding.LoginBinding
 import com.kangdroid.k_labapplication.repository.ServerRepositoryImpl
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import java.lang.RuntimeException
+
 
 class LoginActivity : AppCompatActivity() {
     private val binding: LoginBinding by lazy {
@@ -35,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
                 var userPassword = loginPw.text.toString()
 
                 if (userId=="" || userPassword==""){
-                    Toast.makeText(this@LoginActivity,"양식을 모두 채우지 않았습니다.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity,"Please fill out all forms.",Toast.LENGTH_SHORT).show()
                     flag = false
                 }
 
@@ -43,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
                     ServerRepositoryImpl.loginUser(
                         userLoginRequest = LoginRequest(userId, userPassword),
                         onSuccess = {
-                            val intent = Intent(this@LoginActivity, ClassListActivity::class.java)
+                            val intent = Intent(this@LoginActivity, TabActivity::class.java)
                             startActivity(intent)
                         },
                         onFailureLambda = {

@@ -29,21 +29,22 @@
             <Button
                 android:id="@+id/button"
                 android:layout_width="120dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
+                android:background="@drawable/green_box4"
                 android:backgroundTint="@color/green_200"
                 android:fontFamily="sans-serif"
+                android:gravity="center"
                 android:shadowColor="@color/white"
                 android:text="Create"
                 android:textColor="@color/black"
-                android:textSize="20dp"
-                app:cornerRadius="30dp" />
+                android:textSize="20dp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="526dp" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
