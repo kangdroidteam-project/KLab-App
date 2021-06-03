@@ -1,0 +1,16 @@
+package com.kangdroid.k_labapplication.data
+
+data class Community(
+    var id: Long,
+    var contentTitle: String, // 제목
+    var contentAuthor: String, // 만든사람
+    var contentPicture: String? = null, // 사진 [없으면 null]
+    var innerContent: String, // 내용
+    var contentNeeds: String, // 무엇이 필요한가
+    var contentDeadline: String, // 데드라인
+    var firstMeeting: String, // 첫 만남
+    var contentRecruitment: Int, // 인원 제한[총 정원]
+    var currentRecruitment: Int, // 현재 정원
+    var isCommunityExpired: Boolean, // true인 경우 모집 마감, false 인 경우 모집 진행
+    var gardenReservationId: GardenReservation
+)
