@@ -60,7 +60,7 @@ object ServerRepositoryImpl: ServerRepository {
 
     override fun registerUser(
         userRegisterRequest: RegisterRequest,
-        onSuccess: ()->Unit,
+        onSuccess: (responseBody: ResponseBody?)->Unit,
         onFailureLambda: (message: String)->Unit
     ) {
         val registerFunction: Call<ResponseBody> = api.registerUser(userRegisterRequest)
@@ -69,10 +69,11 @@ object ServerRepositoryImpl: ServerRepository {
 
     override fun loginUser(
         userLoginRequest: LoginRequest,
-        onSuccess: () -> Unit,
+        onSuccess: (loginResponse: LoginResponse?) -> Unit,
         onFailureLambda: (message: String) -> Unit
     ) {
         val loginFunction: Call<LoginResponse> = api.loginUser(userLoginRequest)
-        loginFunction.enqueue(ServerRepositoryHelper.getCallback(onSuccess, onFailureLambda))
+        loginFunction.enqueue(ServerRepositoryHelper.getCallback<LoginResponse>(onSuccess, onFailureLambda))
     }
+
 }

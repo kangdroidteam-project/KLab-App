@@ -12,15 +12,15 @@ object ServerRepositoryHelper {
     private val logTag: String = this::class.java.simpleName
     private val objectMapper: ObjectMapper = ObjectMapper()
 
-    fun<T> getCallback(onSuccess: () -> Unit, onFailureLambda: (message: String) -> Unit): Callback<T> {
+    fun<T> getCallback(onSuccess: (loginResponse: T?) -> Unit, onFailureLambda: (message: String) -> Unit): Callback<T> {
         return object: Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 // When 200-ish response
                 if (response.isSuccessful) {
-                    onSuccess()
+                    onSuccess(response.body())
                 } else {
                     // For 400 to 500 response
-                    val errorMessage: String = ServerRepositoryHelper.getErrorMessage(response)
+                    val errorMessage: String = getErrorMessage(response)
                     Log.e(logTag, errorMessage)
                     onFailureLambda(errorMessage)
                 }
