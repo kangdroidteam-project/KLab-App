@@ -1,8 +1,9 @@
-package com.kangdroid.k_labapplication.view
+package com.kangdroid.k_labapplication.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.kangdroid.k_labapplication.view.ClassListFragment
 
 class TabFragAdapter (fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity){
     override fun getItemCount(): Int {
