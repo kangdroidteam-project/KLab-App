@@ -34,7 +34,7 @@ object ServerRepositoryHelper {
         }
     }
 
-    private fun <T> getErrorMessage(response: Response<T>): String {
+    fun <T> getErrorMessage(response: Response<T>): String {
         // If error body is null, something went wrong.
         val errorBody: ResponseBody = response.errorBody()!!
 
@@ -44,6 +44,16 @@ object ServerRepositoryHelper {
             errorBodyMap["errorMessage"]!!
         } else {
             "Error message was not found!! This should be reported to developers."
+        }
+    }
+
+    fun <T> exchangeDataWithServer(apiFunction: Call<T>): Response<T> {
+        return runCatching {
+            apiFunction.execute()
+        }.getOrElse {
+            Log.e(logTag, "Error when getting root token from server.")
+            Log.e(logTag, it.stackTraceToString())
+            throw it
         }
     }
 }
