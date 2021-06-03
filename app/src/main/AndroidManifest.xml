@@ -25,6 +25,7 @@
         <activity android:name=".view.MyClassListActivity"/>
         <activity android:name=".view.ClassDetailActivity"/>
         <activity android:name=".view.LoginActivity" />
+        <activity android:name=".view.TabActivity"/>
     </application>
 
 </manifest>

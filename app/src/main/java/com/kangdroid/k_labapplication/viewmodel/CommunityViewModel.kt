@@ -27,7 +27,11 @@ class CommunityViewModel (application: Application) : AndroidViewModel(applicati
                 runCatching {
                     ServerRepositoryImpl.getClassList()
                 }.onSuccess {
-                    liveSimpleClassList.value = it
+
+                    withContext(Dispatchers.Main){
+                        liveSimpleClassList.value = it
+                    }
+
                 }
             }
         }
@@ -39,7 +43,9 @@ class CommunityViewModel (application: Application) : AndroidViewModel(applicati
                 runCatching {
                     ServerRepositoryImpl.getDetailedClass(id)
                 }.onSuccess {
-                    liveCommunity.value = it
+                    withContext(Dispatchers.Main) {
+                        liveCommunity.value = it
+                    }
                 }
             }
         }
@@ -51,9 +57,10 @@ class CommunityViewModel (application: Application) : AndroidViewModel(applicati
                 runCatching {
                     ServerRepositoryImpl.registerClass(id)
                 }.onSuccess {
-                    liveMyPageCommunityList.value = it
+                    withContext(Dispatchers.Main){
+                        liveMyPageCommunityList.value = it
+                    }
                 }
-
             }
         }
     }

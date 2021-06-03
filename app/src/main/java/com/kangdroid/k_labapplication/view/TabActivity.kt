@@ -38,7 +38,6 @@ class TabActivity : AppCompatActivity() {
         binding.tablayout.getTabAt(0)?.getIcon()?.setColorFilter(selected, PorterDuff.Mode.SRC_IN)
         binding.tablayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
