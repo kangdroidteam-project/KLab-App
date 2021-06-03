@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".view.TabActivity"></activity>
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.MainActivity" />
-        <activity android:name=".view.RegisterActivity"/>
-        <activity android:name=".view.ClassListActivity"/>
+        <activity android:name=".view.RegisterActivity" />
         <activity android:name=".view.LoginActivity" />
     </application>
 
