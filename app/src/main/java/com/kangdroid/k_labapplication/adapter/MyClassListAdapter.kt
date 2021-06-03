@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
 import com.kangdroid.k_labapplication.databinding.MyClassListRowBinding
-import com.kangdroid.k_labapplication.view.SimplifiedMyPageCommunity
 
 class MyClassListAdapter(val items : ArrayList<SimplifiedMyPageCommunity>) : RecyclerView.Adapter<MyClassListAdapter.ViewHolder>() {
 

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kangdroid.k_labapplication.adapter.MyClassListAdapter
+import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
 import com.kangdroid.k_labapplication.databinding.MyClassListBinding
 
 class MyClassListActivity : AppCompatActivity() {

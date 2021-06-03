@@ -1,4 +1,4 @@
-package com.kangdroid.k_labapplication.view
+package com.kangdroid.k_labapplication.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,7 @@ class ClassListAdapter (val items:ArrayList<SimplifiedCommunity>) : RecyclerView
         fun OnItemClick(view:View, position:Int)
     }
 
-    var itemClickListener:OnItemClickListener? =null
+    var itemClickListener: OnItemClickListener? =null
 
     inner class ViewHolder(val binding: ClassListRecycleBinding) : RecyclerView.ViewHolder(binding.root){
         init{
