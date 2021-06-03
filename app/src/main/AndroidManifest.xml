@@ -3,6 +3,7 @@
     package="com.kangdroid.k_labapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -21,7 +22,8 @@
         </activity>
         <activity android:name=".view.MainActivity" />
         <activity android:name=".view.RegisterActivity"/>
-        <activity android:name=".view.ClassListActivity"/>
+        <activity android:name=".view.MyClassListActivity"/>
+        <activity android:name=".view.ClassDetailActivity"/>
         <activity android:name=".view.LoginActivity" />
     </application>
 
