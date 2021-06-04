@@ -47,6 +47,8 @@ class ClassMakeActivity : AppCompatActivity() {
                 val classdeadline = classDeadline.text.toString()
                 val classrecru = classrecruitment.text.toString().toInt()
 
+                bitstr = "aaa"
+
                 val com = CommunityAddRequest( classtitle,"NONE", bitstr, classcontent, classneeds, classdeadline, classrecru, garden )
 
                 val intent = Intent(this@ClassMakeActivity,GardenReservationActivity::class.java)

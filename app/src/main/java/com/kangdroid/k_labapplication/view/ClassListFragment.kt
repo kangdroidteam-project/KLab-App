@@ -23,7 +23,7 @@ class ClassListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.liveSimpleClassList.observe(viewLifecycleOwner, Observer {
-            Log.d("ClassList", "아직 안됨")
+            adapter?.update(it)
         })
 
     }
@@ -47,7 +47,7 @@ class ClassListFragment : Fragment() {
             viewModel.getClassList()
 
             //Adapter
-            adapter = ClassListAdapter(viewModel.liveSimpleClassList)
+            adapter = ClassListAdapter(viewModel.liveSimpleClassList.value!!)
             adapter?.itemClickListener = object : ClassListAdapter.OnItemClickListener{
                 override fun OnItemClick(view: View, position: Int) {
                     //ClassDetailActivity 연결

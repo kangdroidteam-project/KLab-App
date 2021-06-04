@@ -8,10 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kangdroid.k_labapplication.data.SimplifiedCommunity
 import com.kangdroid.k_labapplication.databinding.ClassListRecycleBinding
 
-class ClassListAdapter(val items: MutableLiveData<List<SimplifiedCommunity>>) : RecyclerView.Adapter<ClassListAdapter.ViewHolder>(){
+class ClassListAdapter(var items: List<SimplifiedCommunity>) : RecyclerView.Adapter<ClassListAdapter.ViewHolder>(){
 
     interface OnItemClickListener{
         fun OnItemClick(view:View, position:Int)
+    }
+
+    fun update(temp :List<SimplifiedCommunity>){
+        items = temp
+        notifyDataSetChanged()
     }
 
     var itemClickListener: OnItemClickListener? =null
@@ -27,7 +32,7 @@ class ClassListAdapter(val items: MutableLiveData<List<SimplifiedCommunity>>) : 
     }
 
     fun getItem(num:Int):SimplifiedCommunity {
-        return items.value!!.get(num)
+        return items[num]
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,14 +41,14 @@ class ClassListAdapter(val items: MutableLiveData<List<SimplifiedCommunity>>) : 
     }
 
     override fun getItemCount(): Int {
-        return items.value!!.size
+        return items.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
-            contentTitle.text = items.value!!.get(position).contentTitle
-            recruitment.text = "${items.value!!.get(position).currentRecruitment} / ${items.value!!.get(position).contentRecruitment}"
-            contentNeeds.text = items.value!!.get(position).contentNeeds
+            contentTitle.text = items[position].contentTitle
+            recruitment.text = "${items[position].currentRecruitment} / ${items[position].contentRecruitment}"
+            contentNeeds.text = items[position].contentNeeds
         }
     }
 }
