@@ -1,5 +1,7 @@
 package com.kangdroid.k_labapplication.data.dto.request
 
+import java.io.Serializable
+
 class CommunityAddRequest (
     var contentTitle: String, // 제목
     var contentAuthor: String, // 만든사람
@@ -9,4 +11,4 @@ class CommunityAddRequest (
     var contentDeadline: String, // 데드라인
     var contentRecruitment: Int, // 인원 제한[총 정원]
     var gardenReservationRequest: GardenReservationRequest // 정원 예약
-    )
+    ) : Serializable

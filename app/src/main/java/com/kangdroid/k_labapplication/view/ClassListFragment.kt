@@ -56,6 +56,11 @@ class ClassListFragment : Fragment() {
                     startActivity(intent)
                 }
             }
+
+            button.setOnClickListener {
+                val intent = Intent(context,ClassMakeActivity::class.java)
+                startActivity(intent)
+            }
         }
         return binding!!.root
     }

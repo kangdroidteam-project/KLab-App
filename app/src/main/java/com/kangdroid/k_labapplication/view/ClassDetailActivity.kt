@@ -23,7 +23,6 @@ class ClassDetailActivity : AppCompatActivity() {
     }
 
     var id : Long = 0L
-    val gallery = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,36 +64,4 @@ class ClassDetailActivity : AppCompatActivity() {
         }
     }
 
-
-    fun clickImage(){
-//        image.setOnClickListener {
-//            val intent = Intent()
-//            intent.type = "image/*"
-//            intent.action = Intent.ACTION_GET_CONTENT
-//
-//            startActivityForResult(Intent.createChooser(intent,"Gallery"),gallery)
-//        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == gallery){
-            if(resultCode== RESULT_OK){
-                var dataUri = data?.data
-                try{
-                    var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(
-                        this.contentResolver,
-                        dataUri
-                    )
-                    binding.image.setImageBitmap(bitmap)
-                }catch (e: Exception){
-                    Toast.makeText(this, "$e", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        else{
-            Toast.makeText(this, "Something went Wrong", Toast.LENGTH_SHORT).show()
-        }
-    }
 }

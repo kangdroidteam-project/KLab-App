@@ -27,6 +27,8 @@
         <activity android:name=".view.ClassDetailActivity" />
         <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.TabActivity" />
+        <activity android:name=".view.ClassMakeActivity"/>
+
     </application>
 
 </manifest>
