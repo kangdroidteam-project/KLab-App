@@ -4,6 +4,7 @@ import com.kangdroid.k_labapplication.data.Community
 import com.kangdroid.k_labapplication.data.GardenReservation
 import com.kangdroid.k_labapplication.data.SimplifiedCommunity
 import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
+import com.kangdroid.k_labapplication.data.dto.request.CommunityAddRequest
 import com.kangdroid.k_labapplication.data.dto.request.LoginRequest
 import com.kangdroid.k_labapplication.data.dto.request.RegisterRequest
 import com.kangdroid.k_labapplication.data.dto.response.LoginResponse
@@ -31,4 +32,8 @@ interface ServerAPI {
     // Join Class and return SimplifiedMyPageCommunity
     @POST("/api/v1/user/class/{id}")
     fun registerClass(@HeaderMap header: HashMap<String, Any?>, @Path("id") id: Long): Call<List<SimplifiedMyPageCommunity>>
+
+    // Make new class
+    @POST("/api/v1/class")
+    fun addClass(@HeaderMap header: HashMap<String, Any?>, @Body communityAddRequest: CommunityAddRequest): Call<ResponseBody>
 }

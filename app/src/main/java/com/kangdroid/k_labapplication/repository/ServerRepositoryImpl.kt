@@ -4,6 +4,7 @@ import android.util.Log
 import com.kangdroid.k_labapplication.data.Community
 import com.kangdroid.k_labapplication.data.SimplifiedCommunity
 import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
+import com.kangdroid.k_labapplication.data.dto.request.CommunityAddRequest
 import com.kangdroid.k_labapplication.data.dto.request.LoginRequest
 import com.kangdroid.k_labapplication.data.dto.request.RegisterRequest
 import com.kangdroid.k_labapplication.data.dto.response.LoginResponse
@@ -135,5 +136,18 @@ object ServerRepositoryImpl: ServerRepository {
 
         return response.body()
             ?: throw RuntimeException("Response Error")
+    }
+
+    override fun addClass(communityAddRequest: CommunityAddRequest) {
+        val addClassFunc: Call<ResponseBody>
+                = api.addClass(header = getHeaders(), communityAddRequest = communityAddRequest)
+        val response: Response<ResponseBody> =
+            ServerRepositoryHelper.exchangeDataWithServer(addClassFunc)
+
+        if (!response.isSuccessful) {
+            // handling fail
+            Log.e(logTag, "${response.code()}")
+            ServerRepositoryHelper.getErrorMessage(response)
+        }
     }
 }
