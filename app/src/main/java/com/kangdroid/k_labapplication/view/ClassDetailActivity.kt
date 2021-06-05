@@ -28,8 +28,6 @@ class ClassDetailActivity : AppCompatActivity() {
 
     var id : Long = 0L
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -37,11 +35,6 @@ class ClassDetailActivity : AppCompatActivity() {
             id = intent.getLongExtra("id",-1)
             Log.e("여기 맞죠?!!?!?!?",id.toString())
         }
-
-        if(intent.hasExtra("jiwoo")){
-            Log.e("지우지우?!!?!?!?", intent.getStringExtra("jiwoo").toString())
-        }
-
         init()
         viewModel.getDetailedClass(id)
     }

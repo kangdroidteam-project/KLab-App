@@ -20,46 +20,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/my_img"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contentTitle"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
         android:id="@+id/contentNeeds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="17dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="60dp"
         android:text="Name"
-        app:layout_constraintStart_toEndOf="@+id/my_img"
-        app:layout_constraintTop_toBottomOf="@+id/contentTitle" />
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/my_name" />
 
     <TextView
         android:id="@+id/my_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="70dp"
         android:text="Spinach Pizza"
         android:textColor="@color/black"
         android:textSize="17dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.456"
         app:layout_constraintStart_toEndOf="@+id/contentNeeds"
         app:layout_constraintTop_toBottomOf="@+id/contentTitle" />
 
     <View
-        android:layout_width="200dp"
+        android:id="@+id/view4"
+        android:layout_width="300dp"
         android:layout_height="2dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:background="@color/green_700"
         app:layout_constraintEnd_toEndOf="@+id/my_name"
         app:layout_constraintHorizontal_bias="0.0"
@@ -71,25 +61,25 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:textSize="17dp"
-        android:layout_marginTop="28dp"
         android:text="Address"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_img" />
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="@+id/contentNeeds"
+        app:layout_constraintTop_toTopOf="@+id/my_addr" />
+
     <TextView
         android:id="@+id/my_addr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:text="주소"
         android:textColor="@color/black"
         android:textSize="17dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.161"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/my_img" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/my_name"
+        app:layout_constraintTop_toBottomOf="@+id/view4" />
+
     <View
         android:id="@+id/view"
         android:layout_width="300dp"
@@ -119,6 +109,8 @@
         android:textColor="@color/black"
         android:textSize="17dp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/my_addr"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -133,12 +125,65 @@
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/my_phone" />
 
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="300dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/green_700"
+        app:layout_constraintEnd_toEndOf="@+id/my_introduction"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/my_introduction" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="introduction"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="@+id/my_introduction" />
+
+    <TextView
+        android:id="@+id/my_introduction"
+        android:layout_width="146dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="32dp"
+        android:text="I can do something"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/my_phone"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <TextView
+        android:id="@+id/my_class_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginVertical="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/green_box3"
+        android:padding="15dp"
+        android:text="주최한 클래스"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_class_join" />
+
     <TextView
         android:id="@+id/my_class_join"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
-        android:layout_marginTop="48dp"
         android:background="@drawable/green_box3"
         android:padding="15dp"
         android:text="참가/신청한 클래스"
@@ -146,14 +191,14 @@
         android:textSize="17dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="28dp"
         android:text="▷"
         android:textColor="@color/green_700"
         android:textSize="20dp"
@@ -162,25 +207,9 @@
         app:layout_constraintTop_toTopOf="@+id/my_class_join" />
 
     <TextView
-        android:id="@+id/my_class_open"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="50dp"
-        android:background="@drawable/green_box3"
-        android:padding="15dp"
-        android:text="주최한 클래스"
-        android:textSize="17dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_class_join" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="28dp"
         android:text="▷"
         android:textColor="@color/green_700"
         android:textSize="20dp"
