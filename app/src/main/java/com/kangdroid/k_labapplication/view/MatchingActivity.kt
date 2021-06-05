@@ -36,6 +36,8 @@ class MatchingActivity : AppCompatActivity(){
             title = viewModel.liveManagerConfirmCommunity.value!!.communityTitle
             communityTotalRecruitment = viewModel.liveManagerConfirmCommunity.value!!.communityTotalRecruitment
             communityCurrentRecruitment = viewModel.liveManagerConfirmCommunity.value!!.communityCurrentRecruitment
+            binding.classtitle.text = title
+            binding.contentNeeds.text = "${communityCurrentRecruitment} / ${communityTotalRecruitment}"
         })
         init()
     }
@@ -54,6 +56,8 @@ class MatchingActivity : AppCompatActivity(){
             communityTotalRecruitment = viewModel.liveManagerConfirmCommunity.value!!.communityTotalRecruitment
             communityCurrentRecruitment = viewModel.liveManagerConfirmCommunity.value!!.communityCurrentRecruitment
 
+            classtitle.text = title
+            contentNeeds.text = "${communityCurrentRecruitment} / ${communityTotalRecruitment}"
 
             //Adapter
             adapter = MatchingAdapter(mutableListOf())
@@ -64,6 +68,7 @@ class MatchingActivity : AppCompatActivity(){
                     intent.putExtra("userName", adapter!!.getItem(position).userName)
                     intent.putExtra("classId", classId)
 
+                    intent.putExtra("isRequestConfirmed", adapter!!.getItem(position).isRequestConfirmed)
                     intent.putExtra("userIntroduction", adapter!!.getItem(position).userIntroduction)
                     intent.putExtra("title", title)
                     intent.putExtra("communityTotalRecruitment", communityTotalRecruitment)
@@ -72,6 +77,7 @@ class MatchingActivity : AppCompatActivity(){
                     startActivityForResult(intent, 200)
                 }
             }
+            //어뎁터 연결
             recyelrview.adapter = adapter
         }
     }

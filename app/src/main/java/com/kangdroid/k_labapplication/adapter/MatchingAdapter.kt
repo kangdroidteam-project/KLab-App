@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.kangdroid.k_labapplication.R
 import com.kangdroid.k_labapplication.data.SealedUser
 import com.kangdroid.k_labapplication.databinding.ClassmatchUserBinding
 
@@ -46,6 +47,9 @@ class MatchingAdapter(var items: List<SealedUser>) : RecyclerView.Adapter<Matchi
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             nickname.text = items[position].userName
+            if(items[position].isRequestConfirmed){
+                box.setBackgroundResource(R.drawable.box3)
+            }
         }
     }
 }

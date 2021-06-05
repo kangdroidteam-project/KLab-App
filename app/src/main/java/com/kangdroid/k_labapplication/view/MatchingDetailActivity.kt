@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.kangdroid.k_labapplication.R
 import com.kangdroid.k_labapplication.adapter.MatchingAdapter
 import com.kangdroid.k_labapplication.databinding.ClassmatchBinding
 import com.kangdroid.k_labapplication.databinding.ProfileManagerBinding
@@ -27,6 +28,7 @@ class MatchingDetailActivity : AppCompatActivity(){
     var userIntroduction = ""
     var communityTotalRecruitment = 0
     var communityCurrentRecruitment = 0
+    var isRequestConfirmed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,7 @@ class MatchingDetailActivity : AppCompatActivity(){
 
     private fun init(){
         if(intent.hasExtra("userName")&& intent.hasExtra("classId")&&intent.hasExtra("userIntroduction")
-            && intent.hasExtra("title")&& intent.hasExtra("communityTotalRecruitment") && intent.hasExtra("communityCurrentRecruitment")){
+            && intent.hasExtra("title")&& intent.hasExtra("communityTotalRecruitment") && intent.hasExtra("communityCurrentRecruitment")&& intent.hasExtra("isRequestConfirmed")){
 
             userName = intent.getStringExtra("userName").toString()
             classId = intent.getLongExtra("classId", -1)
@@ -44,6 +46,8 @@ class MatchingDetailActivity : AppCompatActivity(){
             userIntroduction = intent.getStringExtra("userIntroduction").toString()
             communityTotalRecruitment = intent.getIntExtra("communityTotalRecruitment",-1)
             communityCurrentRecruitment = intent.getIntExtra("communityCurrentRecruitment",-1)
+            isRequestConfirmed = intent.getBooleanExtra("isRequestConfirmed",false)
+
         }
 
         binding.apply {
@@ -51,10 +55,17 @@ class MatchingDetailActivity : AppCompatActivity(){
             contentNeeds.text = "${communityCurrentRecruitment} / ${communityTotalRecruitment}"
             name.text = "User name: ${userName}"
             userIntroduction.text = userIntroduction.toString()
+            if(isRequestConfirmed){
+                invite.setBackgroundResource(R.drawable.box5)
+            }
 
             val scope = CoroutineScope(Dispatchers.IO)
             invite.setOnClickListener {
-                if(communityCurrentRecruitment<communityTotalRecruitment){
+                if(communityCurrentRecruitment>=communityTotalRecruitment){
+                    Toast.makeText(this@MatchingDetailActivity, "You can't invite any more",Toast.LENGTH_SHORT).show()
+                }else if(isRequestConfirmed){
+                    Toast.makeText(this@MatchingDetailActivity, "Already invited.",Toast.LENGTH_SHORT).show()
+                }else{
                     scope.launch {
                         runCatching {
                             ServerRepositoryImpl.confirmClassParticipants(classId, userName)
@@ -66,8 +77,6 @@ class MatchingDetailActivity : AppCompatActivity(){
                             }
                         }
                     }
-                }else{
-                    Toast.makeText(this@MatchingDetailActivity, "You can't invite any more",Toast.LENGTH_SHORT).show()
                 }
             }
         }
