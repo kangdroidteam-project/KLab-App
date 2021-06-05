@@ -7,10 +7,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import com.kangdroid.k_labapplication.R
 import com.kangdroid.k_labapplication.data.Community
@@ -30,7 +32,7 @@ class ClassDetailActivity : AppCompatActivity() {
     }
 
     var id : Long = 0L
-    var flag = ""
+    var flag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +42,19 @@ class ClassDetailActivity : AppCompatActivity() {
             Log.e("여기 맞죠?!!?!?!?",id.toString())
         }
         if(intent.hasExtra("flag")){
-            flag = intent.getStringExtra("flag")!!
+            flag = intent.getBooleanExtra("flag",false)
+            Log.e("플래그입니다", flag.toString())
         }
+        if(flag){
+            binding.joinbtn.visibility = View.GONE
+            binding.joinbtn.setBackgroundColor(Color.GRAY)
+        }
+
         init()
         viewModel.getDetailedClass(id)
     }
 
     private fun init(){
-
-        val btn = findViewById<Button>(R.id.joinbtn)
-
 
 
         viewModel.liveCommunity.observe(this@ClassDetailActivity, androidx.lifecycle.Observer {
@@ -58,21 +63,14 @@ class ClassDetailActivity : AppCompatActivity() {
 
             binding.apply {
 
-                if(flag=="true"){
-                    joinbtn.isEnabled=false
-                    joinbtn.setBackgroundColor(Color.GRAY)
-                }
-
                 title.text = data.contentTitle
                 val autext = "Author : ${data.contentAuthor}"
                 nickname.text = autext
-                if(data.contentPicture!=null){
+                if(data.contentPicture!=""){
                     //string to bitmap
                     val decodedArray: ByteArray = DatatypeConverter.parseBase64Binary(data.contentPicture)
                     val bitmapTmp: Bitmap = BitmapFactory.decodeByteArray(decodedArray, 0, decodedArray.size)
                     image.setImageBitmap(bitmapTmp)
-                }else{
-                    data.contentPicture=""
                 }
                 content.text = data.innerContent
                 needs.text = data.contentNeeds
