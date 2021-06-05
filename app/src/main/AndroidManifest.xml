@@ -15,17 +15,17 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".view.GardenReservationActivity"></activity>
         <activity android:name=".view.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".view.MainActivity" />
         <activity android:name=".view.RegisterActivity" />
         <activity android:name=".view.MyClassListActivity"/>
         <activity android:name=".view.ClassDetailActivity" />
         <activity android:name=".view.LoginActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".view.TabActivity" />
         <activity android:name=".view.ClassMakeActivity"/>
