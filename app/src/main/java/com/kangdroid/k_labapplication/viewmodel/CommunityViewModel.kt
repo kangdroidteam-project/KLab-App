@@ -4,9 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.kangdroid.k_labapplication.data.Community
-import com.kangdroid.k_labapplication.data.SimplifiedCommunity
-import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
+import com.kangdroid.k_labapplication.data.*
 import com.kangdroid.k_labapplication.repository.ServerRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,6 +16,9 @@ class CommunityViewModel (application: Application) : AndroidViewModel(applicati
     val liveCommunity: MutableLiveData<Community> = MutableLiveData()
     val liveSimpleClassList: MutableLiveData<List<SimplifiedCommunity>> = MutableLiveData()
     val liveMyPageCommunityList: MutableLiveData<List<SimplifiedMyPageCommunity>> = MutableLiveData()
+
+    val liveSealedUser: MutableLiveData<SealedUser> = MutableLiveData()
+    val liveManagerConfirmCommunity: MutableLiveData<ManagerConfirmCommunity> = MutableLiveData()
 
     val errorData: MutableLiveData<Throwable> = MutableLiveData() //need??
 
@@ -59,6 +60,51 @@ class CommunityViewModel (application: Application) : AndroidViewModel(applicati
                 }.onSuccess {
                     withContext(Dispatchers.Main){
                         liveMyPageCommunityList.value = it
+                    }
+                }
+            }
+        }
+    }
+
+    fun getUser() {
+        // SealedUser
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                runCatching {
+                    ServerRepositoryImpl.getUser()
+                }.onSuccess {
+                    withContext(Dispatchers.Main){
+                        liveSealedUser.value = it
+                    }
+                }
+            }
+        }
+    }
+
+    fun getUserParticipatedClass(isParticipant: Boolean){
+        // List<SimplifiedMyPageCommunity>
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                runCatching {
+                    ServerRepositoryImpl.getUserParticipatedClass(isParticipant = isParticipant)
+                }.onSuccess {
+                    withContext(Dispatchers.Main){
+                        liveMyPageCommunityList.value = it
+                    }
+                }
+            }
+        }
+    }
+
+    fun getClassParticipants(id: Long){
+        // ManagerConfirmCommunity
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                runCatching {
+                    ServerRepositoryImpl.getClassParticipants(id = id)
+                }.onSuccess {
+                    withContext(Dispatchers.Main){
+                        liveManagerConfirmCommunity.value = it
                     }
                 }
             }
