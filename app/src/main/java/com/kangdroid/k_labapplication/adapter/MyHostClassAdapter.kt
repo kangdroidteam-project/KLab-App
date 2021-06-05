@@ -4,12 +4,11 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
-import com.kangdroid.k_labapplication.databinding.MyClassListRowBinding
+import com.kangdroid.k_labapplication.databinding.MyHostClassListRowBinding
 
-class MyClassListAdapter(val items : List<SimplifiedMyPageCommunity>) : RecyclerView.Adapter<MyClassListAdapter.ViewHolder>() {
+class MyHostClassAdapter (val items : List<SimplifiedMyPageCommunity>) : RecyclerView.Adapter<MyHostClassAdapter.ViewHolder>() {
 
     interface onItemClickListener{
         fun onItemClick(holder : ViewHolder, view : View, dataSimplified : SimplifiedMyPageCommunity, position:Int)
@@ -17,7 +16,7 @@ class MyClassListAdapter(val items : List<SimplifiedMyPageCommunity>) : Recycler
 
     var itemClickListener : onItemClickListener ?= null
 
-    inner class ViewHolder(val binding : MyClassListRowBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding : MyHostClassListRowBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
                 itemClickListener?.onItemClick(this,it,items[adapterPosition],adapterPosition)
@@ -27,7 +26,7 @@ class MyClassListAdapter(val items : List<SimplifiedMyPageCommunity>) : Recycler
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        val view = MyClassListRowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view = MyHostClassListRowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(view)
     }
 

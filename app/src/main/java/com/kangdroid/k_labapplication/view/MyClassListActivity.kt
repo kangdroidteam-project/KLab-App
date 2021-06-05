@@ -1,10 +1,12 @@
 package com.kangdroid.k_labapplication.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kangdroid.k_labapplication.adapter.MyClassListAdapter
 import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
@@ -22,6 +24,8 @@ class MyClassListActivity : AppCompatActivity() {
     }
 
     var id : Long = 0L
+    var flag = false
+    lateinit var data : List<SimplifiedMyPageCommunity>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,27 +37,61 @@ class MyClassListActivity : AppCompatActivity() {
     private fun init(){
 
         if(intent.hasExtra("id")){
-            val id = intent.getLongExtra("id",-1)
+            id = intent.getLongExtra("id",-1)
         }
-        if(id==-1L)return
+        else if(intent.hasExtra("myPage")){
+            flag = intent.getBooleanExtra("mypage",false)
+        }
 
         binding.classListRV.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
 
-        viewModel.registerClass(id)
-        adapter = MyClassListAdapter(viewModel.liveMyPageCommunityList)
+        if(id!=0L){
 
-        adapter.itemClickListener = object : MyClassListAdapter.onItemClickListener{
-            override fun onItemClick(
-                holder: MyClassListAdapter.ViewHolder,
-                view: View,
-                dataSimplified: SimplifiedMyPageCommunity,
-                position: Int
-            ) {
-                // 클래스 상세내용으로 전환
+            viewModel.liveMyPageCommunityList.observe(this, Observer {
+                
+            adapter = MyClassListAdapter(it)
+
+            adapter.itemClickListener = object : MyClassListAdapter.onItemClickListener{
+                override fun onItemClick(
+                    holder: MyClassListAdapter.ViewHolder,
+                    view: View,
+                    dataSimplified: SimplifiedMyPageCommunity,
+                    position: Int
+                ) {
+                    val intent = Intent(this@MyClassListActivity,ClassDetailActivity::class.java)
+                    intent.putExtra("id",dataSimplified.id)
+                    startActivity(intent)
+                }
+
             }
+            binding.classListRV.adapter = adapter
+        })
+        viewModel.registerClass(id)
+    }
+                
+    else if(flag){
+
+            viewModel.liveMyPageCommunityList.observe(this, Observer {
+
+                adapter = MyClassListAdapter(it)
+
+                adapter.itemClickListener = object : MyClassListAdapter.onItemClickListener{
+                    override fun onItemClick(
+                        holder: MyClassListAdapter.ViewHolder,
+                        view: View,
+                        dataSimplified: SimplifiedMyPageCommunity,
+                        position: Int
+                    ) {
+                        val intent = Intent(this@MyClassListActivity,ClassDetailActivity::class.java)
+                        intent.putExtra("id",dataSimplified.id)
+                        startActivity(intent)
+                    }
+
+                }
+                binding.classListRV.adapter = adapter
+            })
+            viewModel.getUserParticipatedClass(flag)
 
         }
-        binding.classListRV.adapter = adapter
-
     }
 }
