@@ -23,9 +23,9 @@ class ClassListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.liveSimpleClassList.observe(viewLifecycleOwner, Observer {
-            Log.d("ClassList", "아직 안됨")
+            adapter?.update(it)
+            //문제
         })
-
     }
 
     override fun onDestroy() {
@@ -47,14 +47,22 @@ class ClassListFragment : Fragment() {
             viewModel.getClassList()
 
             //Adapter
-            adapter = ClassListAdapter(viewModel.liveSimpleClassList)
+            adapter = ClassListAdapter(mutableListOf())
             adapter?.itemClickListener = object : ClassListAdapter.OnItemClickListener{
                 override fun OnItemClick(view: View, position: Int) {
                     //ClassDetailActivity 연결
                     val intent = Intent(context, ClassDetailActivity::class.java)
                     intent.putExtra("id", adapter!!.getItem(position).id)
+                    intent.putExtra("jiwoo", "jiwoo")
+                    Log.e("idididididi: ", adapter!!.getItem(position).id.toString())
                     startActivity(intent)
                 }
+            }
+            recyclerView.adapter = adapter
+
+            button.setOnClickListener {
+                val intent = Intent(context,ClassMakeActivity::class.java)
+                startActivity(intent)
             }
         }
         return binding!!.root
