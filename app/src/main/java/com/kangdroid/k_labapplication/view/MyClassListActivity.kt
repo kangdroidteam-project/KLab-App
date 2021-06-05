@@ -2,6 +2,7 @@ package com.kangdroid.k_labapplication.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +25,7 @@ class MyClassListActivity : AppCompatActivity() {
     }
 
     var id : Long = 0L
-    var flag = false
+    var flag = true
     lateinit var data : List<SimplifiedMyPageCommunity>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +39,6 @@ class MyClassListActivity : AppCompatActivity() {
 
         if(intent.hasExtra("id")){
             id = intent.getLongExtra("id",-1)
-        }
-        else if(intent.hasExtra("myPage")){
-            flag = intent.getBooleanExtra("mypage",false)
         }
 
         binding.classListRV.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)

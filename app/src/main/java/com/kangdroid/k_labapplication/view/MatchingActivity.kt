@@ -31,15 +31,8 @@ class MatchingActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel.liveManagerConfirmCommunity.observe(this, Observer {
-            adapter?.update(it.participantsList)
-            title = viewModel.liveManagerConfirmCommunity.value!!.communityTitle
-            communityTotalRecruitment = viewModel.liveManagerConfirmCommunity.value!!.communityTotalRecruitment
-            communityCurrentRecruitment = viewModel.liveManagerConfirmCommunity.value!!.communityCurrentRecruitment
-            binding.classtitle.text = title
-            binding.contentNeeds.text = "${communityCurrentRecruitment} / ${communityTotalRecruitment}"
-        })
         init()
+        viewModel.getClassParticipants(classId)
     }
 
     fun init(){
@@ -47,38 +40,47 @@ class MatchingActivity : AppCompatActivity(){
             classId = intent.getLongExtra("matching", -1)
         }
 
-        binding.apply {
-            recyelrview.layoutManager = LinearLayoutManager(this@MatchingActivity)
+        viewModel.liveManagerConfirmCommunity.observe(this@MatchingActivity, Observer {
+            binding.apply {
 
-            //데이터 받기
-            viewModel.getClassParticipants(classId)
-            title = viewModel.liveManagerConfirmCommunity.value!!.communityTitle
-            communityTotalRecruitment = viewModel.liveManagerConfirmCommunity.value!!.communityTotalRecruitment
-            communityCurrentRecruitment = viewModel.liveManagerConfirmCommunity.value!!.communityCurrentRecruitment
+                recyelrview.layoutManager = LinearLayoutManager(this@MatchingActivity)
 
-            classtitle.text = title
-            contentNeeds.text = "${communityCurrentRecruitment} / ${communityTotalRecruitment}"
+                Log.e("MATCHINGACTIVITY","CLASSID : $classId")
 
-            //Adapter
-            adapter = MatchingAdapter(mutableListOf())
-            adapter?.itemClickListener = object : MatchingAdapter.OnItemClickListener{
-                override fun OnItemClick(view: View, position: Int) {
-                    //ClassDetailActivity 연결
-                    val intent = Intent(this@MatchingActivity, MatchingDetailActivity::class.java)
-                    intent.putExtra("userName", adapter!!.getItem(position).userName)
-                    intent.putExtra("classId", classId)
+                title = it.communityTitle
+                communityTotalRecruitment = it.communityTotalRecruitment
+                communityCurrentRecruitment = it.communityCurrentRecruitment
 
-                    intent.putExtra("isRequestConfirmed", adapter!!.getItem(position).isRequestConfirmed)
-                    intent.putExtra("userIntroduction", adapter!!.getItem(position).userIntroduction)
-                    intent.putExtra("title", title)
-                    intent.putExtra("communityTotalRecruitment", communityTotalRecruitment)
-                    intent.putExtra("communityCurrentRecruitment", communityCurrentRecruitment)
+                classtitle.text = title
+                contentNeeds.text = "${communityCurrentRecruitment} / ${communityTotalRecruitment}"
 
-                    startActivityForResult(intent, 200)
+                //Adapter
+                adapter = MatchingAdapter(it.participantsList)
+                adapter?.itemClickListener = object : MatchingAdapter.OnItemClickListener{
+                    override fun OnItemClick(view: View, position: Int) {
+                        //ClassDetailActivity 연결
+                        val intent = Intent(this@MatchingActivity, MatchingDetailActivity::class.java)
+                        intent.putExtra("userName", adapter!!.getItem(position).userName)
+                        intent.putExtra("classId", classId)
+
+                        intent.putExtra("isRequestConfirmed", adapter!!.getItem(position).isRequestConfirmed)
+                        intent.putExtra("userIntroduction", adapter!!.getItem(position).userIntroduction)
+                        intent.putExtra("title", title)
+                        intent.putExtra("communityTotalRecruitment", communityTotalRecruitment)
+                        intent.putExtra("communityCurrentRecruitment", communityCurrentRecruitment)
+
+                        startActivityForResult(intent, 200)
+                    }
                 }
+                //어뎁터 연결
+                recyelrview.adapter = adapter
             }
-            //어뎁터 연결
-            recyelrview.adapter = adapter
-        }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.e("ONRESUME","여끼여끼여끼여끼엮여끼")
+        viewModel.getClassParticipants(classId)
     }
 }

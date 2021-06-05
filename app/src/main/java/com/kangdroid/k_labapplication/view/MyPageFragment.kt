@@ -45,13 +45,11 @@ class MyPageFragment : Fragment() {
 
                 myClassJoin.setOnClickListener {
                     val intent = Intent(context, MyClassListActivity::class.java)
-                    intent.putExtra("myPage",true)
                     startActivity(intent)
                 }
 
                 myClassOpen.setOnClickListener {
                     val intent = Intent(context,MyHostClassActivity::class.java)
-                    intent.putExtra("myPage",false)
                     startActivity(intent)
                 }
             }

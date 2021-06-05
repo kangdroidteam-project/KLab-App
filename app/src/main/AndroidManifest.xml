@@ -30,6 +30,8 @@
         <activity android:name=".view.TabActivity" />
         <activity android:name=".view.ClassMakeActivity"/>
         <activity android:name=".view.MyHostClassActivity"/>
+        <activity android:name=".view.MatchingActivity"/>
+        <activity android:name=".view.MatchingDetailActivity"/>
 
     </application>
 

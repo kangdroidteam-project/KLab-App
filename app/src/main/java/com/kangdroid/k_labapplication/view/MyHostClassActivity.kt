@@ -2,10 +2,12 @@ package com.kangdroid.k_labapplication.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kangdroid.k_labapplication.adapter.MyClassListAdapter
 import com.kangdroid.k_labapplication.adapter.MyHostClassAdapter
 import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
@@ -17,7 +19,7 @@ class MyHostClassActivity : AppCompatActivity() {
 
     val viewModel: CommunityViewModel by viewModels()
     lateinit var adapter : MyHostClassAdapter
-    var flag = true
+    var flag = false
 
     private val binding : MyHostClassListBinding by lazy{
         MyHostClassListBinding.inflate(layoutInflater)
@@ -32,11 +34,11 @@ class MyHostClassActivity : AppCompatActivity() {
 
     fun init(){
 
-        if(intent.hasExtra("myPage")){
-            flag = intent.getBooleanExtra("mypage",true)
-        }
+        binding.classListRV.layoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.VERTICAL,false)
 
         if(!flag){
+            Log.e("MYHOSTCLASS","FLAG is $flag")
             viewModel.liveMyPageCommunityList.observe(this, Observer {
 
                 adapter = MyHostClassAdapter(it)
@@ -48,9 +50,9 @@ class MyHostClassActivity : AppCompatActivity() {
                         dataSimplified: SimplifiedMyPageCommunity,
                         position: Int
                     ) {
-//                        val intent = Intent(this@MyHostClassActivity,MatchingActivity::class.java)
-//                        intent.putExtra("matching",dataSimplified.id)
-//                        startActivity(intent)
+                        val intent = Intent(this@MyHostClassActivity,MatchingActivity::class.java)
+                        intent.putExtra("matching",dataSimplified.id)
+                        startActivity(intent)
                     }
 
                 }

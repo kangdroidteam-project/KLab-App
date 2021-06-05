@@ -25,7 +25,7 @@ class MatchingDetailActivity : AppCompatActivity(){
     var userName = ""
     var classId :Long = 0L
     var title = ""
-    var userIntroduction = ""
+    var introduction = ""
     var communityTotalRecruitment = 0
     var communityCurrentRecruitment = 0
     var isRequestConfirmed = false
@@ -43,7 +43,7 @@ class MatchingDetailActivity : AppCompatActivity(){
             userName = intent.getStringExtra("userName").toString()
             classId = intent.getLongExtra("classId", -1)
             title = intent.getStringExtra("title").toString()
-            userIntroduction = intent.getStringExtra("userIntroduction").toString()
+            introduction = intent.getStringExtra("userIntroduction").toString()
             communityTotalRecruitment = intent.getIntExtra("communityTotalRecruitment",-1)
             communityCurrentRecruitment = intent.getIntExtra("communityCurrentRecruitment",-1)
             isRequestConfirmed = intent.getBooleanExtra("isRequestConfirmed",false)
@@ -54,7 +54,7 @@ class MatchingDetailActivity : AppCompatActivity(){
             classtitle.text = title
             contentNeeds.text = "${communityCurrentRecruitment} / ${communityTotalRecruitment}"
             name.text = "User name: ${userName}"
-            userIntroduction.text = userIntroduction.toString()
+            userIntroduction.text = introduction.toString()
             if(isRequestConfirmed){
                 invite.setBackgroundResource(R.drawable.box5)
             }
