@@ -165,18 +165,18 @@ class GardenReservationActivity : AppCompatActivity() {
             //create
             create.setOnClickListener {
                 scope.launch {
-                        runCatching {
-                            ServerRepositoryImpl.addClass(
-                                communityAddRequest = communityAddRequest!!
-                            )
-                            Log.e("addClass Temp", "true")
+                    runCatching {
+                        ServerRepositoryImpl.addClass(
+                            communityAddRequest = communityAddRequest!!
+                        )
+                        Log.e("addClass Temp", "true")
 
-                        }.onSuccess {
-                            withContext(Dispatchers.Main){
-                                val intent = Intent(this@GardenReservationActivity,TabActivity::class.java)
-                                startActivity(intent)
-                            }
+                    }.onSuccess {
+                        withContext(Dispatchers.Main){
+                            val intent = Intent(this@GardenReservationActivity,TabActivity::class.java)
+                            startActivity(intent)
                         }
+                    }
                 }
             }
         }
