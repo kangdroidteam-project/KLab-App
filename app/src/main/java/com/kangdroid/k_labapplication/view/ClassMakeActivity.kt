@@ -2,6 +2,7 @@ package com.kangdroid.k_labapplication.view
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
@@ -11,6 +12,10 @@ import com.kangdroid.k_labapplication.data.dto.request.CommunityAddRequest
 import com.kangdroid.k_labapplication.data.dto.request.GardenReservationRequest
 import com.kangdroid.k_labapplication.databinding.ClassMakeBinding
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import javax.xml.bind.DatatypeConverter
 
 class ClassMakeActivity : AppCompatActivity() {
 
@@ -47,9 +52,8 @@ class ClassMakeActivity : AppCompatActivity() {
                 val classdeadline = classDeadline.text.toString()
                 val classrecru = classrecruitment.text.toString().toInt()
 
-                bitstr = "aaa"
-
-                val com = CommunityAddRequest( classtitle,"NONE", bitstr, classcontent, classneeds, classdeadline, classrecru, garden )
+                val com = CommunityAddRequest( classtitle,"NONE", contentPicture = bitstr, classcontent, classneeds, classdeadline, classrecru, garden )
+                println(com.contentPicture ?: "No Content Picture")
 
                 val intent = Intent(this@ClassMakeActivity,GardenReservationActivity::class.java)
                 intent.putExtra("CommunityAddRequest",com)
@@ -66,21 +70,24 @@ class ClassMakeActivity : AppCompatActivity() {
         if(requestCode == gallery){
             if(resultCode== RESULT_OK){
                 var dataUri = data?.data
-                try{
-                    var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(
-                        this.contentResolver,
-                        dataUri
-                    )
-                    binding.classImage.setImageBitmap(bitmap)
-
-                    val baos = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 70, baos)
-                    val bytes = baos.toByteArray()
-                    bitstr =  Base64.encodeToString(bytes, Base64.DEFAULT)
-
-                }catch (e: Exception){
-                    Toast.makeText(this, "$e", Toast.LENGTH_SHORT).show()
+                val file: File = File.createTempFile("SOME_RANDOM_IMAGE",null, this.cacheDir).apply {
+                    deleteOnExit()
                 }
+                val fileInputStream: InputStream = this.contentResolver.openInputStream(dataUri!!)!!
+
+                FileOutputStream(file).use { outputStream ->
+                    var read: Int =-1
+                    val bytes = ByteArray(1024)
+                    while(fileInputStream.read(bytes).also{read = it} != -1){
+                        outputStream.write(bytes,0,read)
+                    }
+                }
+                val fileArray: ByteArray = file.readBytes()
+                val bitmapTmp: Bitmap = BitmapFactory.decodeByteArray(fileArray, 0, fileArray.size)
+                this.binding.classImage.setImageBitmap(bitmapTmp)
+
+                bitstr =  DatatypeConverter.printBase64Binary(fileArray)
+                println(bitstr)
             }
         }
         else{

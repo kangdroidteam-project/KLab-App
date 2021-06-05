@@ -12,5 +12,5 @@ data class Community(
     var contentRecruitment: Int, // 인원 제한[총 정원]
     var currentRecruitment: Int, // 현재 정원
     var isCommunityExpired: Boolean, // true인 경우 모집 마감, false 인 경우 모집 진행
-    var gardenReservationId: GardenReservation
+    var gardenReservation: GardenReservation
 )

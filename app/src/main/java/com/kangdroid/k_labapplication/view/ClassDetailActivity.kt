@@ -15,6 +15,7 @@ import com.kangdroid.k_labapplication.databinding.ClassDetailBinding
 import com.kangdroid.k_labapplication.repository.ServerRepositoryImpl.getDetailedClass
 import com.kangdroid.k_labapplication.viewmodel.CommunityViewModel
 import java.util.*
+import javax.xml.bind.DatatypeConverter
 
 
 class ClassDetailActivity : AppCompatActivity() {
@@ -50,18 +51,24 @@ class ClassDetailActivity : AppCompatActivity() {
 //            if(id==-1L)return
             data = it
 
+            Log.e("KDR", "NOF: ${data.gardenReservation.reservationSpace}")
+
             binding.apply {
                 title.text = data.contentTitle
                 val autext = "Author : ${data.contentAuthor}"
                 nickname.text = autext
                 if(data.contentPicture!=null){
                     //string to bitmap
+                    Log.e(this::class.java.simpleName, data.contentPicture ?: "")
+                    val decodedArray: ByteArray = DatatypeConverter.parseBase64Binary(data.contentPicture)
+                    val bitmapTmp: Bitmap = BitmapFactory.decodeByteArray(decodedArray, 0, decodedArray.size)
+                    image.setImageBitmap(bitmapTmp)
                 }
                 content.text = data.innerContent
                 needs.text = data.contentNeeds
                 deadline.text = data.contentDeadline
                 firstmeeting.text = data.firstMeeting
-                firstmeetingplace.text = data.gardenReservationId.reservationSpace
+                firstmeetingplace.text = data.gardenReservation.reservationSpace
                 recruitment.text = data.contentRecruitment.toString()
 
                 joinbtn.setOnClickListener {
