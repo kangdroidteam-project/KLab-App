@@ -196,9 +196,9 @@ object ServerRepositoryImpl: ServerRepository {
             ?: throw RuntimeException("Response Error")
     }
 
-    override fun confirmClassParticipants(id: Long, userId: String) {
+    override fun confirmClassParticipants(id: Long, userName: String) {
         val confirmClassParticipantsFunc: Call<ResponseBody>
-                = api.confirmClassParticipants(header = getHeaders(), id = id, userId = userId)
+                = api.confirmClassParticipants(header = getHeaders(), id = id, userName = userName)
         val response: Response<ResponseBody> =
             ServerRepositoryHelper.exchangeDataWithServer(confirmClassParticipantsFunc)
 

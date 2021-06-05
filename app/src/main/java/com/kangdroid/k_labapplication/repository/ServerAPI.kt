@@ -44,6 +44,6 @@ interface ServerAPI {
     @GET("/api/v1/class/{id}/user")
     fun getClassParticipants(@HeaderMap header: HashMap<String, Any?>, @Path("id") id: Long): Call<ManagerConfirmCommunity>
 
-    @POST("/api/v1/class/{id}/user/{userId}")
-    fun confirmClassParticipants(@HeaderMap header: HashMap<String, Any?>, @Path("id") id: Long, @Path("userId") userId: String): Call<ResponseBody>
+    @POST("/api/v1/class/{id}/user/{userName}")
+    fun confirmClassParticipants(@HeaderMap header: HashMap<String, Any?>, @Path("id") id: Long, @Path("userName") userName: String): Call<ResponseBody>
 }

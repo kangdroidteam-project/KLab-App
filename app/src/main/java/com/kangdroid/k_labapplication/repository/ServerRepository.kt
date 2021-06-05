@@ -30,5 +30,5 @@ interface ServerRepository {
     fun getUser(): SealedUser
     fun getUserParticipatedClass(isParticipant: Boolean): List<SimplifiedMyPageCommunity>
     fun getClassParticipants(id: Long): ManagerConfirmCommunity
-    fun confirmClassParticipants(id: Long, userId: String)
+    fun confirmClassParticipants(id: Long, userName: String)
 }
