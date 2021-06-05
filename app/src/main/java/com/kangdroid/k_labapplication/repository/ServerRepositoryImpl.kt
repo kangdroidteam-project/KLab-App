@@ -1,9 +1,7 @@
 package com.kangdroid.k_labapplication.repository
 
 import android.util.Log
-import com.kangdroid.k_labapplication.data.Community
-import com.kangdroid.k_labapplication.data.SimplifiedCommunity
-import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
+import com.kangdroid.k_labapplication.data.*
 import com.kangdroid.k_labapplication.data.dto.request.CommunityAddRequest
 import com.kangdroid.k_labapplication.data.dto.request.LoginRequest
 import com.kangdroid.k_labapplication.data.dto.request.RegisterRequest
@@ -143,6 +141,66 @@ object ServerRepositoryImpl: ServerRepository {
                 = api.addClass(header = getHeaders(), communityAddRequest = communityAddRequest)
         val response: Response<ResponseBody> =
             ServerRepositoryHelper.exchangeDataWithServer(addClassFunc)
+
+        if (!response.isSuccessful) {
+            // handling fail
+            Log.e(logTag, "${response.code()}")
+            ServerRepositoryHelper.getErrorMessage(response)
+        }
+    }
+
+    override fun getUser(): SealedUser {
+        val getUserFunc: Call<SealedUser> = api.getUser(header = getHeaders())
+        val response: Response<SealedUser> =
+            ServerRepositoryHelper.exchangeDataWithServer(getUserFunc)
+
+        if (!response.isSuccessful) {
+            // handling fail
+            Log.e(logTag, "${response.code()}")
+            ServerRepositoryHelper.getErrorMessage(response)
+        }
+
+        return response.body()
+            ?: throw RuntimeException("Response Error")
+    }
+
+    override fun getUserParticipatedClass(isParticipant: Boolean): List<SimplifiedMyPageCommunity> {
+        val getUserParticipatedClassFunc: Call<List<SimplifiedMyPageCommunity>>
+                = api.getUserParticipatedClass(header = getHeaders(), isParticipant = isParticipant)
+        val response: Response<List<SimplifiedMyPageCommunity>> =
+            ServerRepositoryHelper.exchangeDataWithServer(getUserParticipatedClassFunc)
+
+        if (!response.isSuccessful) {
+            // handling fail
+            Log.e(logTag, "${response.code()}")
+            ServerRepositoryHelper.getErrorMessage(response)
+        }
+
+        return response.body()
+            ?: throw RuntimeException("Response Error")
+    }
+
+    override fun getClassParticipants(id: Long): ManagerConfirmCommunity {
+        val getClassParticipantsFunc: Call<ManagerConfirmCommunity> =
+            api.getClassParticipants(header = getHeaders(), id = id)
+        val response: Response<ManagerConfirmCommunity> =
+            ServerRepositoryHelper.exchangeDataWithServer(getClassParticipantsFunc)
+
+        if (!response.isSuccessful) {
+            // handling fail
+            Log.e(logTag, "${response.code()}")
+            ServerRepositoryHelper.getErrorMessage(response)
+        }
+
+        return response.body()
+            ?: throw RuntimeException("Response Error")
+    }
+
+    override fun confirmClassParticipants(id: Long, userId: String) {
+        val confirmClassParticipantsFunc: Call<ResponseBody>
+                = api.confirmClassParticipants(header = getHeaders(), id = id, userId = userId)
+        val response: Response<ResponseBody> =
+            ServerRepositoryHelper.exchangeDataWithServer(confirmClassParticipantsFunc)
 
         if (!response.isSuccessful) {
             // handling fail

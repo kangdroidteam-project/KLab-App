@@ -1,9 +1,6 @@
 package com.kangdroid.k_labapplication.repository
 
-import com.kangdroid.k_labapplication.data.Community
-import com.kangdroid.k_labapplication.data.GardenReservation
-import com.kangdroid.k_labapplication.data.SimplifiedCommunity
-import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
+import com.kangdroid.k_labapplication.data.*
 import com.kangdroid.k_labapplication.data.dto.request.CommunityAddRequest
 import com.kangdroid.k_labapplication.data.dto.request.LoginRequest
 import com.kangdroid.k_labapplication.data.dto.request.RegisterRequest
@@ -36,4 +33,17 @@ interface ServerAPI {
     // Make new class
     @POST("/api/v1/class")
     fun addClass(@HeaderMap header: HashMap<String, Any?>, @Body communityAddRequest: CommunityAddRequest): Call<ResponseBody>
+
+    @GET("/api/v1/user")
+    fun getUser(@HeaderMap header: HashMap<String, Any?>): Call<SealedUser>
+
+    // true = 유저용, false = 어드민용[호스트]
+    @GET("/api/v1/user/class") // /api/v1/user/class?isParticipant=true
+    fun getUserParticipatedClass(@HeaderMap header: HashMap<String, Any?>, @Query("isParticipant") isParticipant: Boolean): Call<List<SimplifiedMyPageCommunity>>
+
+    @GET("/api/v1/class/{id}/user")
+    fun getClassParticipants(@HeaderMap header: HashMap<String, Any?>, @Path("id") id: Long): Call<ManagerConfirmCommunity>
+
+    @POST("/api/v1/class/{id}/user/{userId}")
+    fun confirmClassParticipants(@HeaderMap header: HashMap<String, Any?>, @Path("id") id: Long, @Path("userId") userId: String): Call<ResponseBody>
 }

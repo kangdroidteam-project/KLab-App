@@ -1,15 +1,13 @@
 package com.kangdroid.k_labapplication.repository
 
-import com.kangdroid.k_labapplication.data.Community
-import com.kangdroid.k_labapplication.data.SimplifiedCommunity
-import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
+import com.kangdroid.k_labapplication.data.*
 import com.kangdroid.k_labapplication.data.dto.request.CommunityAddRequest
 import com.kangdroid.k_labapplication.data.dto.request.LoginRequest
 import com.kangdroid.k_labapplication.data.dto.request.RegisterRequest
 import com.kangdroid.k_labapplication.data.dto.response.LoginResponse
 import okhttp3.ResponseBody
-import retrofit2.http.Body
-import retrofit2.http.HeaderMap
+import retrofit2.Call
+import retrofit2.http.*
 
 interface ServerRepository {
     fun registerUser(
@@ -28,4 +26,9 @@ interface ServerRepository {
     fun getDetailedClass(id: Long): Community
     fun registerClass(id: Long): List<SimplifiedMyPageCommunity>
     fun addClass(communityAddRequest: CommunityAddRequest)
+
+    fun getUser(): SealedUser
+    fun getUserParticipatedClass(isParticipant: Boolean): List<SimplifiedMyPageCommunity>
+    fun getClassParticipants(id: Long): ManagerConfirmCommunity
+    fun confirmClassParticipants(id: Long, userId: String)
 }
