@@ -63,7 +63,7 @@
                 android:layout_height="38dp"
                 android:layout_weight="1"
                 android:background="@drawable/green_box1"
-                android:text="Join"
+                android:text="Detail"
                 android:textColor="@color/white"
                 android:textColorHighlight="@color/white"
                 android:textColorLink="@color/white" />

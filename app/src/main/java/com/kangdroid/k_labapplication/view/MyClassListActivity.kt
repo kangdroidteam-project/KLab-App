@@ -82,6 +82,7 @@ class MyClassListActivity : AppCompatActivity() {
                     ) {
                         val intent = Intent(this@MyClassListActivity,ClassDetailActivity::class.java)
                         intent.putExtra("id",dataSimplified.id)
+                        intent.putExtra("flag","true")
                         startActivity(intent)
                     }
 
