@@ -13,9 +13,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -23,22 +23,23 @@
                 android:layout_height="wrap_content"
                 android:text="Show Class List"
                 android:textColor="#464343"
-                android:textSize="30sp"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button"
-                android:layout_width="120dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:background="@drawable/green_box4"
                 android:backgroundTint="@color/green_200"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
+                android:paddingHorizontal="20dp"
                 android:shadowColor="@color/white"
                 android:text="Create"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

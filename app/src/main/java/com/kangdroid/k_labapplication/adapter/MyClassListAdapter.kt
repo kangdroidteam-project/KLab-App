@@ -1,6 +1,7 @@
 package com.kangdroid.k_labapplication.adapter
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
 import com.kangdroid.k_labapplication.databinding.MyClassListRowBinding
+import java.text.SimpleDateFormat
 
 class MyClassListAdapter(val items : List<SimplifiedMyPageCommunity>) : RecyclerView.Adapter<MyClassListAdapter.ViewHolder>() {
 
@@ -33,9 +35,9 @@ class MyClassListAdapter(val items : List<SimplifiedMyPageCommunity>) : Recycler
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
-
+            val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm")
             myClassName.text = items[position].contentTitle
-            myClassTime.text = items[position].startTime.toString()
+            myClassTime.text = sdf.format(items[position].startTime).toString()
             myClassSupply.text =items[position].contentNeeds
 
             if(!items[position].isRequestConfirmed){

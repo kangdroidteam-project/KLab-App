@@ -46,7 +46,7 @@ class GardenReservationActivity : AppCompatActivity() {
 
         val calendar = Calendar.getInstance()
         for(i in 1 until 8){
-            calendar.add(Calendar.DAY_OF_MONTH, i)
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
             val oneDate = calendar.time
             adapter!!.add(SimpleDateFormat("yyyy-MM-dd").format(oneDate))
         }
@@ -88,9 +88,10 @@ class GardenReservationActivity : AppCompatActivity() {
                     id: Long
                 ) {
                     date = adapter?.getItem(position).toString()
+                    Log.e("DATA 확인", date)
                 }
             }
-
+            communityAddRequest!!.gardenReservationRequest.reservationSpace = "A"
             //공간
             for(v in checkSpace){
                 v.setOnClickListener {
@@ -116,6 +117,7 @@ class GardenReservationActivity : AppCompatActivity() {
                 }
             }
 
+            time = timeList[0]
             //시간
             for (v in checkTime){
                 v.setOnClickListener {
@@ -147,25 +149,22 @@ class GardenReservationActivity : AppCompatActivity() {
                             timeFlag[i] = false
                         }
                         timeFlag[num] = true
+//                        val sdf = SimpleDateFormat("yyyy-MM-dd-hh-mm")
+//                        communityAddRequest!!.gardenReservationRequest.reservationStartTime = sdf.parse("${date}-${time}").time
                     }
                 }
             }
 
 
-            val sdf = SimpleDateFormat("yyyy-MM-dd")
-//            val timestamp = sdf.parse(date).time
-
-//            communityAddRequest!!.gardenReservationRequest.reservationStartTime = timestamp
-
-            communityAddRequest!!.gardenReservationRequest.reservationStartTime = 1564981
-
 
             val scope = CoroutineScope(Dispatchers.IO)
-
             //create
             create.setOnClickListener {
                 scope.launch {
                     runCatching {
+                        val sdf = SimpleDateFormat("yyyy-MM-dd-hh-mm")
+                        communityAddRequest!!.gardenReservationRequest.reservationStartTime = sdf.parse("${date}-${time}").time
+
                         ServerRepositoryImpl.addClass(
                             communityAddRequest = communityAddRequest!!
                         )

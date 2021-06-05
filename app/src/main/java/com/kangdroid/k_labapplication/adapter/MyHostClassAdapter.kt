@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kangdroid.k_labapplication.data.SimplifiedMyPageCommunity
 import com.kangdroid.k_labapplication.databinding.MyHostClassListRowBinding
+import java.text.SimpleDateFormat
 
 class MyHostClassAdapter (val items : List<SimplifiedMyPageCommunity>) : RecyclerView.Adapter<MyHostClassAdapter.ViewHolder>() {
 
@@ -32,9 +33,9 @@ class MyHostClassAdapter (val items : List<SimplifiedMyPageCommunity>) : Recycle
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
-
+            val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm")
             myClassName.text = items[position].contentTitle
-            myClassTime.text = items[position].startTime.toString()
+            myClassTime.text = sdf.format(items[position].startTime).toString()
             myClassSupply.text =items[position].contentNeeds
 
             if(!items[position].isRequestConfirmed){

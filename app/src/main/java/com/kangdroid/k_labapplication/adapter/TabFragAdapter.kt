@@ -6,6 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.kangdroid.k_labapplication.view.AdFragment
 import com.kangdroid.k_labapplication.view.ClassListFragment
 import com.kangdroid.k_labapplication.view.MyPageFragment
+import com.kangdroid.k_labapplication.view.OfflineFragment
 
 class TabFragAdapter (fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity){
     override fun getItemCount(): Int {
@@ -16,7 +17,7 @@ class TabFragAdapter (fragmentActivity: FragmentActivity) : FragmentStateAdapter
         return when(position){
             0-> ClassListFragment()
             1-> AdFragment()
-//            2->
+            2-> OfflineFragment()
             3-> MyPageFragment()
             else -> ClassListFragment()
         }

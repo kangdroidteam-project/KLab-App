@@ -191,7 +191,7 @@
             android:textColorHighlight="@color/white"
             android:textColorLink="@color/white"
             android:textSize="18dp"
-            app:cornerRadius="30dp"/>
+            android:background="@drawable/box1"/>
 
     </LinearLayout>
 
